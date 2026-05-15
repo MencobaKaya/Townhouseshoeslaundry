@@ -1010,6 +1010,50 @@ img { max-width: 100%; height: auto; display: block; }
 
 .contact-map iframe { filter: grayscale(0.5) invert(0.9); }
 
+/* ========== FLOATING IG ========== */
+.floating-ig {
+  position: fixed;
+  bottom: 86px;
+  left: 24px;
+  z-index: 999;
+  width: 50px;
+  height: 50px;
+  background: linear-gradient(135deg, #833ab4, #fd1d1d, #f77737);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--white);
+  font-size: 1.4rem;
+  box-shadow: 0 4px 20px rgba(131, 58, 180, 0.25);
+  transition: all 0.3s var(--ease-out);
+}
+
+.floating-ig:hover {
+  transform: scale(1.08);
+  box-shadow: 0 6px 30px rgba(131, 58, 180, 0.35);
+  color: var(--white);
+}
+
+.floating-ig-tip {
+  position: absolute;
+  left: 62px;
+  background: rgba(0, 0, 0, 0.9);
+  color: var(--white);
+  padding: 6px 12px;
+  border-radius: 8px;
+  font-size: 0.78rem;
+  font-weight: 500;
+  white-space: nowrap;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s;
+  font-family: var(--font);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.floating-ig:hover .floating-ig-tip { opacity: 1; visibility: visible; }
+
 /* ========== FLOATING WA ========== */
 .floating-wa {
   position: fixed;
@@ -1256,6 +1300,7 @@ img { max-width: 100%; height: auto; display: block; }
   .cta-card { padding: 40px 20px; }
 
   .container { padding: 0 16px; }
+  .floating-ig { width: 46px; height: 46px; font-size: 1.3rem; bottom: 72px; left: 16px; }
   .floating-wa { width: 46px; height: 46px; font-size: 1.3rem; bottom: 16px; left: 16px; }
   .scroll-top { width: 40px; height: 40px; font-size: 1rem; bottom: 16px; right: 16px; }
 }
