@@ -6,7 +6,7 @@
   <title>Townhouse Shoes Laundry — Ga Try, You Cry</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
   <link rel="stylesheet" href="style.css" />
 </head>
@@ -14,6 +14,15 @@
 
   <!-- Progress Bar -->
   <div class="progress-bar" id="progressBar"></div>
+
+  <!-- Noise Texture -->
+  <svg class="noise" width="100%" height="100%" preserveAspectRatio="none">
+    <filter id="noiseFilter">
+      <feTurbulence type="fractalNoise" baseFrequency="0.6" numOctaves="5" stitchTiles="stitch"/>
+      <feColorMatrix type="matrix" values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 0.12 0"/>
+    </filter>
+    <rect width="100%" height="100%" filter="url(#noiseFilter)"/>
+  </svg>
 
   <!-- Loader -->
   <div class="loader" id="loader">
@@ -190,7 +199,6 @@
           <p class="price-value">Rp<span class="price-num">75.000</span></p>
         </div>
         <div class="price-card price-card-featured">
-          <div class="price-badge">Terlaris</div>
           <div class="price-icon-wrap"><i class="fas fa-paint-roller"></i></div>
           <h3>Repaint</h3>
           <p class="price-desc">Pengecatan ulang sepatu — ubah tampilan jadi seperti baru</p>
@@ -208,73 +216,30 @@
         <h2 class="section-title">Hasil <span class="text-gradient">Karya</span> Kami</h2>
         <div class="divider"></div>
       </div>
-      <div class="gallery-grid" id="galleryGrid">
-        <div class="gallery-item" data-src="https://picsum.photos/seed/shoe1/800/600">
-          <div class="image-reveal">
+      <div class="slider-container" id="gallerySlider">
+        <div class="slider-track" id="sliderTrack">
+          <div class="slider-slide" data-src="https://picsum.photos/seed/shoe1/800/600">
             <img src="https://picsum.photos/seed/shoe1/400/300" alt="Hasil laundry sepatu 1" loading="lazy" />
           </div>
-          <div class="gallery-overlay">
-            <div class="gallery-overlay-content">
-              <i class="fas fa-search-plus"></i>
-              <span>Klik lihat</span>
-            </div>
-          </div>
-        </div>
-        <div class="gallery-item" data-src="https://picsum.photos/seed/shoe2/800/600">
-          <div class="image-reveal">
+          <div class="slider-slide" data-src="https://picsum.photos/seed/shoe2/800/600">
             <img src="https://picsum.photos/seed/shoe2/400/300" alt="Hasil laundry sepatu 2" loading="lazy" />
           </div>
-          <div class="gallery-overlay">
-            <div class="gallery-overlay-content">
-              <i class="fas fa-search-plus"></i>
-              <span>Klik lihat</span>
-            </div>
-          </div>
-        </div>
-        <div class="gallery-item" data-src="https://picsum.photos/seed/shoe3/800/600">
-          <div class="image-reveal">
+          <div class="slider-slide" data-src="https://picsum.photos/seed/shoe3/800/600">
             <img src="https://picsum.photos/seed/shoe3/400/300" alt="Hasil laundry sepatu 3" loading="lazy" />
           </div>
-          <div class="gallery-overlay">
-            <div class="gallery-overlay-content">
-              <i class="fas fa-search-plus"></i>
-              <span>Klik lihat</span>
-            </div>
-          </div>
-        </div>
-        <div class="gallery-item" data-src="https://picsum.photos/seed/shoe4/800/600">
-          <div class="image-reveal">
+          <div class="slider-slide" data-src="https://picsum.photos/seed/shoe4/800/600">
             <img src="https://picsum.photos/seed/shoe4/400/300" alt="Hasil laundry sepatu 4" loading="lazy" />
           </div>
-          <div class="gallery-overlay">
-            <div class="gallery-overlay-content">
-              <i class="fas fa-search-plus"></i>
-              <span>Klik lihat</span>
-            </div>
-          </div>
-        </div>
-        <div class="gallery-item" data-src="https://picsum.photos/seed/shoe5/800/600">
-          <div class="image-reveal">
+          <div class="slider-slide" data-src="https://picsum.photos/seed/shoe5/800/600">
             <img src="https://picsum.photos/seed/shoe5/400/300" alt="Hasil laundry sepatu 5" loading="lazy" />
           </div>
-          <div class="gallery-overlay">
-            <div class="gallery-overlay-content">
-              <i class="fas fa-search-plus"></i>
-              <span>Klik lihat</span>
-            </div>
-          </div>
-        </div>
-        <div class="gallery-item" data-src="https://picsum.photos/seed/shoe6/800/600">
-          <div class="image-reveal">
+          <div class="slider-slide" data-src="https://picsum.photos/seed/shoe6/800/600">
             <img src="https://picsum.photos/seed/shoe6/400/300" alt="Hasil laundry sepatu 6" loading="lazy" />
           </div>
-          <div class="gallery-overlay">
-            <div class="gallery-overlay-content">
-              <i class="fas fa-search-plus"></i>
-              <span>Klik lihat</span>
-            </div>
-          </div>
         </div>
+        <button class="slider-btn slider-prev" aria-label="Sebelumnya"><i class="fas fa-chevron-left"></i></button>
+        <button class="slider-btn slider-next" aria-label="Selanjutnya"><i class="fas fa-chevron-right"></i></button>
+        <div class="slider-dots" id="sliderDots"></div>
       </div>
     </div>
   </section>
@@ -353,8 +318,11 @@
     <div class="container">
       <div class="footer-content">
         <div class="footer-brand">
-          <h3><i class="fas fa-shoe-prints"></i> Townhouse Shoes Laundry</h3>
-          <p>"Ga Try, You Cry"</p>
+          <div class="footer-logo-wrap">
+            <img src="images/zyro-image.png" alt="Townhouse Shoes Laundry" class="footer-logo-img" />
+            <span class="footer-brand-name">Townhouse</span>
+          </div>
+          <p class="footer-tagline">"Ga Try, You Cry"</p>
         </div>
         <div class="footer-links">
           <h4>Menu</h4>
@@ -370,7 +338,7 @@
           <h4>Ikuti Kami</h4>
           <div class="social-links">
             <a href="https://wa.me/6287828258491?text=Halo%20Townhouse%20Shoes%20Laundry%2C%20saya%20mau%20tanya%20tentang%20layanan%20laundry%20sepatu.%20Mohon%20infonya%20ya%2C%20terima%20kasih%21" target="_blank" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
-            <a href="#" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+            <a href="https://www.instagram.com/townhouseshoeslaundry?igsh=Nmc5dWxycXVlMW1z" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
             <a href="#" target="_blank" aria-label="TikTok"><i class="fab fa-tiktok"></i></a>
           </div>
         </div>
