@@ -107,12 +107,12 @@ document.addEventListener('DOMContentLoaded', function () {
 
   /* ========== STAGGER CARDS ========== */
   (function () {
-    var grids = document.querySelectorAll('.price-grid, .gallery-grid');
-    if (!grids.length) return;
+    var grid = document.querySelector('.price-grid');
+    if (!grid) return;
     var obs = new IntersectionObserver(function (entries) {
       entries.forEach(function (entry) {
         if (entry.isIntersecting) {
-          var items = entry.target.querySelectorAll('.price-card, .gallery-item');
+          var items = entry.target.querySelectorAll('.price-card');
           items.forEach(function (item, i) {
             item.style.opacity = '0';
             item.style.transform = 'translateY(30px)';
@@ -126,7 +126,62 @@ document.addEventListener('DOMContentLoaded', function () {
         }
       });
     }, { threshold: 0.05 });
-    grids.forEach(function (g) { obs.observe(g); });
+    obs.observe(grid);
+  })();
+
+  /* ========== SLIDER ========== */
+  (function () {
+    var track = document.getElementById('sliderTrack');
+    var container = document.getElementById('gallerySlider');
+    var slides = track.querySelectorAll('.slider-slide');
+    var dotsContainer = document.getElementById('sliderDots');
+    var prevBtn = container.querySelector('.slider-prev');
+    var nextBtn = container.querySelector('.slider-next');
+    var current = 0;
+    var total = slides.length;
+    var autoInterval;
+
+    if (!track || total === 0) return;
+
+    // create dots
+    for (var i = 0; i < total; i++) {
+      var dot = document.createElement('span');
+      dot.addEventListener('click', function (idx) { return function () { goTo(idx); }; }(i));
+      dotsContainer.appendChild(dot);
+    }
+    var dots = dotsContainer.querySelectorAll('span');
+
+    function goTo(index) {
+      current = index;
+      track.style.transform = 'translateX(-' + (current * 100) + '%)';
+      dots.forEach(function (d) { d.classList.remove('active'); });
+      dots[current].classList.add('active');
+    }
+
+    function next() { goTo((current + 1) % total); }
+    function prev() { goTo((current - 1 + total) % total); }
+
+    prevBtn.addEventListener('click', function (e) { e.stopPropagation(); next(); });
+    nextBtn.addEventListener('click', function (e) { e.stopPropagation(); prev(); });
+
+    // auto slide
+    function startAuto() { autoInterval = setInterval(next, 4000); }
+    function stopAuto() { clearInterval(autoInterval); }
+    container.addEventListener('mouseenter', stopAuto);
+    container.addEventListener('mouseleave', startAuto);
+
+    // touch swipe
+    var startX = 0;
+    container.addEventListener('touchstart', function (e) { startX = e.touches[0].clientX; }, { passive: true });
+    container.addEventListener('touchend', function (e) {
+      var diff = e.changedTouches[0].clientX - startX;
+      if (Math.abs(diff) > 50) {
+        if (diff > 0) prev(); else next();
+      }
+    }, { passive: true });
+
+    goTo(0);
+    startAuto();
   })();
 
   /* ========== COUNTER ========== */
@@ -154,7 +209,7 @@ document.addEventListener('DOMContentLoaded', function () {
     counters.forEach(function (c) { obs.observe(c); });
   })();
 
-  /* ========== LIGHTBOX ========== */
+  /* ========== SLIDER LIGHTBOX ========== */
   (function () {
     var lightbox = document.getElementById('lightbox');
     if (!lightbox) return;
@@ -163,12 +218,14 @@ document.addEventListener('DOMContentLoaded', function () {
     var close = lightbox.querySelector('.lightbox-close');
     var prev = lightbox.querySelector('.lightbox-prev');
     var next = lightbox.querySelector('.lightbox-next');
-    var items = document.querySelectorAll('.gallery-item');
+    var slides = document.querySelectorAll('.slider-slide');
     var current = 0, images = [];
 
-    items.forEach(function (item, i) {
-      images.push({ src: item.getAttribute('data-src'), alt: item.querySelector('img').getAttribute('alt') });
-      item.addEventListener('click', function () { open(i); });
+    slides.forEach(function (slide, i) {
+      var src = slide.getAttribute('data-src');
+      var alt = slide.querySelector('img').getAttribute('alt');
+      images.push({ src: src, alt: alt });
+      slide.addEventListener('click', function () { open(i); });
     });
 
     function open(i) { current = i; update(); lightbox.classList.add('active'); document.body.style.overflow = 'hidden'; }
