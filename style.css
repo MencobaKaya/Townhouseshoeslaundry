@@ -96,14 +96,25 @@ img { max-width: 100%; height: auto; display: block; }
 
 .loader-content { text-align: center; }
 
-.loader-icon {
-  font-size: 2.5rem;
-  color: var(--orange);
+.loader-logo {
+  height: 140px;
+  width: auto;
+  display: block;
+  margin: 0 auto;
   animation: loaderBounce 0.6s var(--ease-bounce) infinite alternate;
 }
 
+.loader-brand {
+  font-family: var(--font);
+  font-size: 2.6rem;
+  font-weight: 700;
+  color: var(--white);
+  margin-top: 20px;
+  letter-spacing: 3px;
+}
+
 @keyframes loaderBounce {
-  to { transform: translateY(-12px); }
+  to { transform: translateY(-10px); }
 }
 
 .loader-bar {
